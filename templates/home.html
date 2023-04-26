@@ -1,0 +1,32 @@
+<!doctype html>
+    <html>
+    <head>
+        <title>PetTalk-Topics</title>
+        <meta name="description" content="Our first page">
+        <meta name="keywords" content="html tutorial template">
+    </head>
+
+    <body>
+        <h1>Welcome!</h1>
+
+        <div class="topnav">
+            <a href="index.php">Stuff</a>
+            <a href="about.php">Topic</a>
+            <a href="contact.php">Stuff</a>
+        </div>
+
+        {% for post in posts %}
+            <h1>{{ post.post_by }}</h1>
+            <p>{{ post.post_subject }}</p>
+            <form method = "POST" actions = "/post/{{post.post_id}}/comment">
+                <textarea id="comment" name="comment" placeholder="Enter comment here..."></textarea>
+                <input type="submit" value="post">
+            </form>
+            
+            {% for reply in post.replies %}
+                <p>{{ reply.content }}</p>
+            {% endfor %}
+            
+        {% endfor %}
+    </body>
+</html>

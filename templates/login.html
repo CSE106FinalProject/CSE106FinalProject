@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <script src="static/javascript.js"></script>
+    <link rel="stylesheet" href="./static/stylish.css">
+    <title>Document</title>
+</head>
+    <body>
+        <h2>Pet Talk</h2><br>
+        <div class="login">
+        <form  action="{{ url_for('login') }}" method="post">
+            <label><b>Username
+            </b>
+            </label>
+            <input type="text" name="Username" id="Username">
+            <br><br>
+            <label><b>Password
+            </b>
+            </label>
+            <input type="Password" name="Pass" id="Pass" >
+            <br><br>
+            <input type="submit" class="btn" value="Sign In"></br></br>
+            <br><br>
+        </form>
+        </div>
+    </body>
+</body>
+</html>

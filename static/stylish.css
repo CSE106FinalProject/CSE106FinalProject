@@ -1,0 +1,57 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color:cornflowerblue;
+    font-family: 'Arial';
+}
+.login{
+        width: 400px;
+        overflow: hidden;
+        margin: auto;
+        padding: 50px;
+        background: bisque;
+        border: outset burlywood 10px;
+
+}
+h1, h2{
+    text-align: center;
+    color: black;
+    padding: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+    background-color: bisque;
+    border: inset burlywood 10px;
+}
+label{
+    color: #08ffd1;
+    font-size: 17px;
+}
+label{
+    color: black;
+}
+button{
+    border: ridge burlywood 10px;
+    font-size: medium;
+    background-color: bisque;
+    margin-left:25%;
+}
+#Username{
+    width: 300px;
+    height: 30px;
+    border: solid black 1px;
+    padding-left: 8px;
+}
+#Pass{
+    width: 300px;
+    height: 30px;
+    border: solid black 1px;
+    padding-left: 8px;
+}
+table, th, td {
+    margin: auto;
+    background-color: bisque;
+    background-size: 75px;
+    border: 2px solid rgb(41, 41, 41);
+    font-size: 30px;
+    text-align: center;
+}
