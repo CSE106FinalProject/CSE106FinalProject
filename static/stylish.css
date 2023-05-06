@@ -98,3 +98,29 @@ table, th, td {
     transition: 0.5s ease;
   
   }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 2px solid var(--clr-neon);
+    outline: none;
+    margin-bottom: 1rem;
+  }
+
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    background-color: var(--clr-neon);
+    color: white;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: hsl(317, 100%, 50%);
+  } 
