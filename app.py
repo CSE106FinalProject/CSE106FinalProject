@@ -241,7 +241,7 @@ def up_vote():
 @app.route("/down-vote", methods=['POST'])
 def down_vote():
     reply_id = request.args.get('reply_id')
-    conn = sqlite3.connect('replData.db')
+    conn = sqlite3.connect('replyData.db')
     c = conn.cursor()
     c.execute("UPDATE replyData SET votes = votes - 1 WHERE id = ?", (reply_id,))
     conn.commit()
