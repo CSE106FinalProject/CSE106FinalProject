@@ -214,7 +214,19 @@ def signout():
     return render_template('login.html')
 
 
+@app.route('/add-reply/', methods=['POST'])
+def add_reply():
+    post_id = request.form['post_id']
+    reply_text = request.form['reply_text']
+    votes = request.form.get('votes', 0)
+    
+    conn = sqlite3.connect('replyData.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO replyData (postID, reply, votes) VALUES (?, ?, ?)', (post_id, reply_text, votes))
+    conn.commit()
+    conn.close()
 
+    return redirect('/home')
 
 
 if __name__ == '__main__':
