@@ -87,3 +87,14 @@ table, th, td {
     font-family: 'Lexend Deca', sans-serif; 
     color: #2E475D;    
   }
+  ul li{
+    display: inline-block;
+  }
+  ul li a{
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 20px;
+    border: 1px solid transparent;
+    transition: 0.5s ease;
+  
+  }
