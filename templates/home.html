@@ -11,22 +11,17 @@
     <body>
         <h1>Welcome!</h1>
 
-        <div class="topnav">
-            <a href="index.php">Stuff</a>
-            <a href="about.php">Topic</a>
-            <a href="contact.php">Stuff</a>
-        </div>
-
-        {% for post in posts %}
-            <h1>{{ post.post_by }}</h1>
-            <p>{{ post.post_subject }}</p>
-        
-            {% if post.post_id in replies_dict %}
-                {% for reply in replies_dict[post.post_id] %}
-                    <h2>{{ reply.reply_by }}</h2>
-                    <p>{{ reply.reply_content }}</p>
+        {% block content %}
+            {% for post in posts_data %}
+                <div>
+                <h2>{{ post[2] }}</h2>
+                {% for reply in replies_data %}
+                    {% if reply[1] == post[0] %}
+                    <p>{{ reply[2] }}</p>
+                    {% endif %}
                 {% endfor %}
-            {% endif %}
-        {% endfor %}
+                </div>
+            {% endfor %}
+        {% endblock %}
     </body>
 </html>

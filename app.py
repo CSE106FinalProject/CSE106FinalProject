@@ -152,34 +152,17 @@ def displaySetter():
 
 @app.route('/home')
 def homes():
-    # Establish a connection to the database
-    conn = sqlite3.connect('instance/example.sqlite')
-    cur = conn.cursor()
+    conn = sqlite3.connect('postData.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM postData')
+    posts_data = c.fetchall()
 
-    # Query all posts from the database
-    posts_query = "SELECT * FROM posts"
-    cur.execute(posts_query)
-    posts = cur.fetchall()
+    conn = sqlite3.connect('replyData.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM replyData')
+    replies_data = c.fetchall()
 
-    # Query all replies from the database
-    replies_query = "SELECT * FROM reply"
-    cur.execute(replies_query)
-    replies = cur.fetchall()
-
-    # Create a dictionary to store replies by post ID
-    replies_dict = {}
-    for reply in replies:
-        post_id = reply[1]
-        if post_id in replies_dict:
-            replies_dict[post_id].append(reply)
-        else:
-            replies_dict[post_id] = [reply]
-
-    # Close the database connection
-    conn.close()
-
-    # Render the home template with the posts and replies data
-    return render_template('home.html', posts=posts, replies_dict=replies_dict)
+    return render_template('home.html', posts_data=posts_data, replies_data=replies_data)
 
 @app.route('/post')
 def post():
