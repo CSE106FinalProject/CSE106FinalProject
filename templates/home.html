@@ -12,9 +12,9 @@
 
         <nav>
 			<ul>
-				<li><a href="url_for('/topic')">Topics</a></li>
-				<li><a href="url_for('/post')">Post</a></li>
-				<li><a href="url_for('/signout')">Log Out</a></li>
+				<li><a href="{{url_for('topic')}}">Topics</a></li>
+				<li><a href="{{url_for('post')}}">Post</a></li>
+				<li><a href="{{ url_for('signout') }}">Sign out</a></li>
 			</ul>
 		</nav>
 

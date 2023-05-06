@@ -179,5 +179,12 @@ def topic():
             return render_template('login.html')
 
 
+@app.route('/signout')
+def signout():
+    # clear the session
+    session.clear()
+    # redirect to the home page
+    return render_template('login.html')
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
