@@ -99,6 +99,14 @@ table, th, td {
   
   }
 
+  i.container {
+    width: 400px;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
   input[type="text"],
   input[type="password"] {
     width: 100%;
@@ -108,19 +116,19 @@ table, th, td {
     outline: none;
     margin-bottom: 1rem;
   }
-
-
+  
   button[type="submit"] {
-    width: 100%;
+    width: 20%;
+  
     padding: 0.5rem;
     border: none;
     background-color: var(--clr-neon);
-    color: white;
+    color: burlywood;
     cursor: pointer;
-    border-radius: 0.25rem;
+    border-radius: 1.25rem;
     transition: background-color 0.3s ease;
   }
   
   button[type="submit"]:hover {
-    background-color: hsl(317, 100%, 50%);
+    background-color: lightseagreen;
   } 
