@@ -17,7 +17,9 @@
                 <h2>{{ post[2] }}</h2>
                 {% for reply in replies_data %}
                     {% if reply[1] == post[0] %}
+                    <div id="center">
                     <p>{{ reply[2] }}</p>
+                </div>
                     {% endif %}
                 {% endfor %}
                 </div>
