@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 from sqlalchemy import create_engine, MetaData, Column, Table, Integer, String, text
+import sqlite3
 import json
 import os
 
@@ -151,8 +152,34 @@ def displaySetter():
 
 @app.route('/home')
 def homes():
-    # Sets the current user to be null, displays login page
-        return render_template('home.html')
+    # Establish a connection to the database
+    conn = sqlite3.connect('instance/example.sqlite')
+    cur = conn.cursor()
+
+    # Query all posts from the database
+    posts_query = "SELECT * FROM posts"
+    cur.execute(posts_query)
+    posts = cur.fetchall()
+
+    # Query all replies from the database
+    replies_query = "SELECT * FROM reply"
+    cur.execute(replies_query)
+    replies = cur.fetchall()
+
+    # Create a dictionary to store replies by post ID
+    replies_dict = {}
+    for reply in replies:
+        post_id = reply[1]
+        if post_id in replies_dict:
+            replies_dict[post_id].append(reply)
+        else:
+            replies_dict[post_id] = [reply]
+
+    # Close the database connection
+    conn.close()
+
+    # Render the home template with the posts and replies data
+    return render_template('home.html', posts=posts, replies_dict=replies_dict)
 
 @app.route('/post')
 def post():

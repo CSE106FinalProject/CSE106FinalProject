@@ -55,3 +55,12 @@ table, th, td {
     font-size: 30px;
     text-align: center;
 }
+#Home{
+    background-image: url("../assets/pet.jpg");
+    background-position: center;
+  }
+  #Page1{
+    background-image: url("../assets/blog.jpg");
+    background-size: 1900px 1400px;
+    background-position: center;
+  }

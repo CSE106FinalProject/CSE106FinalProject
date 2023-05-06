@@ -1,9 +1,11 @@
 <!doctype html>
     <html>
+        <body id = "home">
     <head>
         <title>PetTalk-Topics</title>
         <meta name="description" content="Our first page">
         <meta name="keywords" content="html tutorial template">
+        <link rel="stylesheet" href="./static/stylish.css">
     </head>
 
     <body>
@@ -18,15 +20,13 @@
         {% for post in posts %}
             <h1>{{ post.post_by }}</h1>
             <p>{{ post.post_subject }}</p>
-            <form method = "POST" actions = "/post/{{post.post_id}}/comment">
-                <textarea id="comment" name="comment" placeholder="Enter comment here..."></textarea>
-                <input type="submit" value="post">
-            </form>
-            
-            {% for reply in post.replies %}
-                <p>{{ reply.content }}</p>
-            {% endfor %}
-            
+        
+            {% if post.post_id in replies_dict %}
+                {% for reply in replies_dict[post.post_id] %}
+                    <h2>{{ reply.reply_by }}</h2>
+                    <p>{{ reply.reply_content }}</p>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
     </body>
 </html>
