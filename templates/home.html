@@ -2,19 +2,26 @@
     <html>
         <body id = "Home">
     <head>
-        <title>PetTalk-Topics</title>
+        <title>PetTalk-Home</title>
         <meta name="description" content="Our first page">
         <meta name="keywords" content="html tutorial template">
         <link rel="stylesheet" href="./static/stylish.css">
     </head>
 
     <body>
-        <h1>Welcome!</h1>
+
+        <nav>
+			<ul>
+				<li><a href="url_for('/topic')">Topics</a></li>
+				<li><a href="url_for('/post')">Post</a></li>
+				<li><a href="url_for('/signout')">Log Out</a></li>
+			</ul>
+		</nav>
 
         {% block content %}
             {% for post in posts_data %}
                 <div>
-                <h2>{{ post[2] }}</h2>
+                <p>{{ post[2] }}</p>
                 {% for reply in replies_data %}
                     {% if reply[1] == post[0] %}
                     <div id="center">
