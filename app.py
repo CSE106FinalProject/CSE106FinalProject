@@ -178,12 +178,6 @@ def topic():
         else:
             return render_template('login.html')
 
-"""""        
-@app.route('/signup')
-def signup():
-    # Sets the current user to be null, displays login page
-            return render_template('signup.html')
-"""
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
