@@ -64,3 +64,27 @@ table, th, td {
     background-size: 1900px 1400px;
     background-position: center;
   }
+  
+  #center {
+    width: 400px; 
+    margin: auto; 
+    
+    /* Optional Styling */
+    padding: 20px;
+    border-style: solid;
+    border-color: #B6C7D6;
+    border-radius: 20px;
+    background-color: #EAF0F6;
+   
+  }
+  
+  
+  /* Styling */
+  
+  body {
+    margin: auto;
+    width: 640px; 
+    padding: 50px;
+    font-family: 'Lexend Deca', sans-serif; 
+    color: #2E475D;    
+  }

@@ -1,6 +1,6 @@
 <!doctype html>
     <html>
-        <body id = "home">
+        <body id = "Home">
     <head>
         <title>PetTalk-Home</title>
         <meta name="description" content="Our first page">
@@ -24,7 +24,9 @@
                 <p>{{ post[2] }}</p>
                 {% for reply in replies_data %}
                     {% if reply[1] == post[0] %}
+                    <div id="center">
                     <p>{{ reply[2] }}</p>
+                </div>
                     {% endif %}
                 {% endfor %}
                 </div>
