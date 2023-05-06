@@ -1,14 +1,26 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
+from sqlalchemy import create_engine, MetaData, Column, Table, Integer, String, text
+import json
+import os
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 app.secret_key = 'cse106projsecretkey'
-db = SQLAlchemy(app)
-login_manager = LoginManager(app)
+#db = SQLAlchemy(app)
+loginData_engine = create_engine('sqlite:///loginData.db', echo = True)
+loginData_meta = MetaData()
+loginData = Table(
+   'loginData', loginData_meta,
+   Column('id', Integer, primary_key = True),
+   Column('username', String),
+   Column('password', Integer))
 
+loginData_meta.create_all(loginData_engine)
+"""""
 class users(db.Model):
     user_id = db.Column(db.Integer, primary_key = True, nullable = False, autoincrement = True)
     user_name = db.Column(db.String(25), nullable = False)
@@ -46,19 +58,122 @@ class reply(db.Model):
 
 with app.app_context():
     db.create_all()
+    """""
 
-@app.route('/')
-@app.route('/login', methods =['GET', 'POST'])
-def login():
-    username = request.form['Username']
-    password = request.form['Pass']
-    account = users(user_name=username, user_pass=password)
-    if account:
-        session['loggedin'] = True
-        session['id'] = account['id']
-        session['username'] = account['username']
-        msg = 'Logged in successfully !'
-        return render_template('home.html', msg = msg)
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    # Sets the current user to be null, displays login page
+    if request.method == 'GET':
+        session['username'] = "null"
+        return render_template('login.html')
+    
+@app.route('/login', methods = ['PASS'])
+def loginFunction():
+    if (request.method == 'PASS'):
+        loginData_connection = loginData_engine.connect()
+
+        # Takes in username and password from the log-in page and assigns them to username and password
+        loginForm = request.data
+        loginForm = loginForm.decode()
+        loginForm = json.loads(loginForm)
+        username = str(loginForm['username'])
+        password = loginForm['password']
+        print(password)
+        #loginData_connection.close()
+        # Finds password in the database (hashed) and assigns it to matchingPass
+        #s = "INSERT INTO loginData (username, password) VALUES ('" + username + "', '" + str(password) + "')"
+        #loginData_connection.execute(text(s))
+        #loginData_connection.commit()
+
+        loginData_connection = loginData_engine.connect()
+        s = "SELECT password FROM loginData WHERE username='" + username + "'"
+        result = loginData_connection.execute(text(s))
+        matchingPass = str(result.fetchone())
+        print(matchingPass)
+        print("THIS IS THE HASHED:")
+        print(password)
+        print('XXXXXXXXX')
+        loginData_connection.close()
+        print("test")
+
+
+        if (matchingPass == "None"):
+            print("TEST FAIL")
+            return "fail"
+
+        # Found a password: converting to int and displaying
+        matchingPass = matchingPass[1:-2]
+        matchingPass = int(matchingPass)
+
+
+        # If the password matches, the below is executed to login the user
+        if (password == matchingPass):
+            print("TEEEEST PASS")
+            session['username'] = username
+            return "correct"
+        else:
+            return "incorrect"
+
+@app.route('/signup', methods = ['GET','PASS'])
+def signup():
+    if (request.method =='GET'):
+        return render_template('signup.html')
+    
+    if (request.method == 'PASS'):
+        loginData_connection = loginData_engine.connect()
+
+        loginForm = request.data
+        loginForm = loginForm.decode()
+        loginForm = json.loads(loginForm)
+        username = str(loginForm['username'])
+        password = loginForm['password']
+        password1 = loginForm['password1']
+        print(password)
+        if(password == password1):
+            s = "INSERT INTO loginData (username, password) VALUES ('" + username + "', '" + str(password) + "')"
+            loginData_connection.execute(text(s))
+            loginData_connection.commit()
+            return "correct"
+        else:
+            return "incorrect"
+        
+
+
+@app.route('/display', methods = ['GET'])
+def displaySetter():
+    if session.get('username') is not None:
+        if (session['username'] != "null"):
+            return render_template('home.html')
+        else:
+            return render_template('login.html')
     else:
-        msg = 'Incorrect username / password !'
-    return render_template('login.html', msg = msg)
+        return render_template('login.html')
+
+@app.route('/home')
+def homes():
+    # Sets the current user to be null, displays login page
+        return render_template('home.html')
+
+@app.route('/post')
+def post():
+    # Sets the current user to be null, displays login page
+        return render_template('post.html')
+
+@app.route('/topic')
+def topic():
+    # Sets the current user to be null, displays login page
+        if session.get('username') is not None:
+            if (session['username'] != "null"):
+                return render_template('topic.html')
+        else:
+            return render_template('login.html')
+
+"""""        
+@app.route('/signup')
+def signup():
+    # Sets the current user to be null, displays login page
+            return render_template('signup.html')
+"""
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
