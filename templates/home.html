@@ -9,6 +9,7 @@
     </head>
 
     <body>
+        <h1>Welcome!</h1>
 
         <nav>
 			<ul>
@@ -21,14 +22,15 @@
         {% block content %}
             {% for post in posts_data %}
                 <div>
-                <p>{{ post[2] }}</p>
-                {% for reply in replies_data %}
-                    {% if reply[1] == post[0] %}
-                    <div id="center">
-                    <p>{{ reply[2] }}</p>
-                </div>
-                    {% endif %}
-                {% endfor %}
+                    <p>{{ post[2] }}</p>
+                    {% for reply in replies_data %}
+                        {% if reply[1] == post[0] %}
+                        <div id="center">
+                            <p>{{ reply[2] }}</p>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
             {% endfor %}
         {% endblock %}
