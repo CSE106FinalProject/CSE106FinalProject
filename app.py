@@ -173,27 +173,22 @@ def homes():
 def post():
 
     if (request.method =='GET'):
-        return render_template('post.html')
+       # return render_template('post.html')
     
-    if (request.method == 'POST'):
-        postData_connection = postData_engine.connect()
+        if (request.method == 'POST'):
+            postData_connection = postData_engine.connect()
 
         postForm = request.data
         postForm = postForm.decode()
         postForm = json.loads(postForm)
+        topic = str(postForm['topic'])
+        post = str(postForm['post'])
         username = str(postForm['username'])
-        password = postForm['password']
-        password1 = postForm['password1']
-        print(password)
-        if(password == password1):
-            s = "INSERT INTO postData (username, password) VALUES ('" + username + "', '" + str(password) + "')"
-            postData_connection.execute(text(s))
-            postData_connection.commit()
-            return "correct"
-        else:
-            return "incorrect"
-        
 
+        grape = "INSERT INTO postData (topic, post, username) VALUES ('" + topic + "', '" + post + "', '" + username + "')"
+        postData_connection.execute(text(grape))
+        postData_connection.commit()
+        
     return render_template('post.html')
 
 @app.route('/topic')

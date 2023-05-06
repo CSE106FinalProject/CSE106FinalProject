@@ -87,11 +87,22 @@ async function readSignUp() {
         })
     };
 
-function deleteNote(noteId) {
-    fetch("/delete-note", {
-      method: "POST",
-      body: JSON.stringify({ noteId: noteId }),
-    }).then((_res) => {
-       window.location.href = "/";
-    });
+function addPost() {
+    topic = document.getElementById("topic").value;
+    post = document.getElementById("post").value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/post", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText);
+        }
     };
+    
+    var data = JSON.stringify({
+      "topic": topic,
+      "post": post
+    });
+    xhr.send(data);
+}
