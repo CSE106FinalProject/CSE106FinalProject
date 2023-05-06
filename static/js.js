@@ -86,3 +86,12 @@ async function readSignUp() {
             else document.getElementById("message").innerHTML = "Password Must Match";
         })
     };
+
+function deleteNote(noteId) {
+    fetch("/delete-note", {
+      method: "POST",
+      body: JSON.stringify({ noteId: noteId }),
+    }).then((_res) => {
+       window.location.href = "/";
+    });
+    };

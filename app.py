@@ -21,6 +21,11 @@ loginData = Table(
    Column('password', Integer))
 
 loginData_meta.create_all(loginData_engine)
+
+
+postData_engine = create_engine('sqlite:///postData.db', echo = True)
+postData_meta = MetaData()
+postData_meta.create_all(postData_engine)
 """""
 class users(db.Model):
     user_id = db.Column(db.Integer, primary_key = True, nullable = False, autoincrement = True)
@@ -164,10 +169,32 @@ def homes():
 
     return render_template('home.html', posts_data=posts_data, replies_data=replies_data)
 
-@app.route('/post')
+@app.route('/post', methods=['GET', 'POST'])
 def post():
-    # Sets the current user to be null, displays login page
+
+    if (request.method =='GET'):
         return render_template('post.html')
+    
+    if (request.method == 'POST'):
+        postData_connection = postData_engine.connect()
+
+        postForm = request.data
+        postForm = postForm.decode()
+        postForm = json.loads(postForm)
+        username = str(postForm['username'])
+        password = postForm['password']
+        password1 = postForm['password1']
+        print(password)
+        if(password == password1):
+            s = "INSERT INTO postData (username, password) VALUES ('" + username + "', '" + str(password) + "')"
+            postData_connection.execute(text(s))
+            postData_connection.commit()
+            return "correct"
+        else:
+            return "incorrect"
+        
+
+    return render_template('post.html')
 
 @app.route('/topic')
 def topic():
